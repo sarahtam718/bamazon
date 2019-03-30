@@ -1,7 +1,7 @@
 // require packages
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-const { printTable } = require('console-table-printer');
+const { Table } = require('console-table-printer');
 
 // connect to mysql table
 var connection = mysql.createConnection({
@@ -12,6 +12,15 @@ var connection = mysql.createConnection({
     database: "bamazon"
 });
 
+const p = new Table({
+    style: 'fatBorder', columns: [
+        { name: 'ID', alignment: 'left' },
+        { name: 'Product', alignment: 'left' },
+        { name: 'Department', alignment: 'left' },
+        { name: 'Price', alignment: 'left' },
+    ]
+});
+
 // // show products from table
 function showProducts() {
     connection.query("select * from products;", function (err, res) {
@@ -20,14 +29,16 @@ function showProducts() {
         } else {
             // console.log(res);
             for (let i = 0; i < res.length; i++) {
-                console.log("ID: " + res[i].item_id + " | Product: " + res[i].product_name + " | Department: " + res[i].department_name + " | Price: " + res[i].price);
+                // console.log("ID: " + res[i].item_id + " | Product: " + res[i].product_name + " | Department: " + res[i].department_name + " | Price: " + res[i].price);
+                p.addRow({ ID: res[i].item_id, Product: res[i].product_name, Department: res[i].department_name, Price: res[i].price }, { color: 'cyan' });
             }
-            // connection.end();
+            p.printTable();
         }
+        connection.end();
     });
 }
 
-// showProducts();
+showProducts();
 
 // // ask user for what they want to buy and how much
 function inq() {
@@ -89,4 +100,4 @@ function start() {
     //     connection.end();
 }
 
-start();
+// start();
