@@ -14,35 +14,35 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
-// connect to mysql table (see documentation)
-// var connection = mysql.createConnection({
-//     host: "localhost",
+// connect to mysql table
+var connection = mysql.createConnection({
+    host: "localhost",
 
-//     // Your port; if not 3306
-//     port: 3307,
+    // Your port; if not 3306
+    port: 3307,
 
-//     // Your username
-//     user: "root",
+    // Your username
+    user: "root",
 
-//     // Your password
-//     password: "root",
-//     database: "bamazon"
-// });
+    // Your password
+    password: "root",
+    database: "bamazon"
+});
 
 
 // // show products from table using query
-// function showProducts() {
-//     connection.query("select * from products;", function (err, res) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             console.log(res);
-//             connection.end();
-//         }
-//     });
-// }
+function showProducts() {
+    connection.query("select * from products;", function (err, res) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(res);
+            connection.end();
+        }
+    });
+}
 
-// showProducts();
+showProducts();
 
 
     // run inquirer with list
