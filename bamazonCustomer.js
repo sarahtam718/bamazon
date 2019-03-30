@@ -38,7 +38,7 @@ function showProducts() {
         for (let i = 0; i < res.length; i++) {
             console.log("ID: " + res[i].item_id + " | Product: " + res[i].product_name + " | Department: " + res[i].department_name + " | Price: " + res[i].price);
         }
-        connection.end();
+        // connection.end();
     });
 }
 
@@ -71,19 +71,32 @@ inquirer.prompt([
                 //     // start();
             } else {
                 console.log(`You have purchased ${ans.amount} unit(s) of this product: ${data[j].product_name}.`)
-                //         // updateDB();
-                //         // showProducts();
-                //         // total()
+                var total = ans.amount * data[j].price;
+                console.log(`Your total is $${total}. Thank you for shopping with us!`);
+                updateDB(ans);
             }
         }
-
-        connection.end()
+        // connection.end()
+        // showProducts();
     });
 
 });
 
-// start function with show products () & inquirer ()
-
 // updateDB () that removes quantity from stock
+function updateDB(user) {
+    connection.query(
+        `UPDATE products
+        SET stock_quantity = stock_quantity - ${user.amount}
+        WHERE item_id = ${user.toBuy};`, function (err, data) {
+            console.log(data);
+            // for (let k = 0; k < data.length; k++) {
+            // console.log(`\nwhat we have available: ${data[k].stock_quantity} \nwhat user wants: ${user.toBuy}`)
+            // }
+        });
+    // showProducts();
+}
 
-// total() = stock_quantity - ans.amount x price
+// start function with show products () & inquirer ()
+function start() {
+
+}
