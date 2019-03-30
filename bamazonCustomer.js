@@ -1,6 +1,7 @@
-// require mysql & inquirer
+// require packages
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+const { printTable } = require('console-table-printer');
 
 // connect to mysql table
 var connection = mysql.createConnection({
